@@ -3,7 +3,7 @@
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <!-- Generated Nov 13, 2014 2:49:57 PM by Hibernate Tools 3.4.0.CR1 -->
 <hibernate-mapping>
-	<class name="domain.GameRuleDomainModel" table="tblRule">
+	<class name="domain.GameRuleDomainModel" table="TBLRULE">
 
 		<id name="RULEID" type="int">
 			<column name="RULEID" length="5" />

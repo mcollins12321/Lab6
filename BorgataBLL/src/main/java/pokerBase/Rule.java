@@ -3,9 +3,12 @@ package pokerBase;
 import java.util.ArrayList;
 
 import domain.CardDomainModel;
+import domain.GameRuleCardsDomainModel;
+import domain.GameRuleDomainModel;
 import enums.eGame;
 import enums.eRank;
 import enums.eSuit;
+import logic.GameRuleCardsBLL;
 
 public class Rule {
 
@@ -20,7 +23,30 @@ public class Rule {
 	private int[] iCardsToDraw;
 	private ArrayList<CardDomainModel> RuleCards = new ArrayList<CardDomainModel>();
 	private eGame Game;
-
+	
+	public Rule(GameRuleDomainModel g)
+	{
+		this.MaxNumberOfPlayers = g.getMAXNUMBEROFPLAYERS();
+		this.PlayerNumberOfCards = g.getPLAYERNUMBEROFCARDS();
+		this.NumberOfJokers = g.getNUMBEROFJOKERS();
+		this.PlayerCardsMin = g.getPLAYERCARDSMIN();
+		this.PlayerCardsMax = g.getPLAYERCARDSMAX();
+		this.CommunityCardsMin = g.getCOMMUNITYCARDSMIN();
+		this.CommunityCardsMax = g.getCOMMUNITYCARDSMAX();	
+		this.PossibleHandCombinations = g.getPOSSIBLEHANDCOMBINATIONS();
+		this.iCardsToDraw = convertCardRules(GameRuleCardsBLL.getCardsRules(g.getRULEID())); 
+	}
+	// TODO maybe make this into a hashmap. 
+	public int[] convertCardRules(ArrayList<GameRuleCardsDomainModel> grc)
+	{
+		int[] rc = new int[grc.size()];  
+		for (GameRuleCardsDomainModel g : grc) 
+		{
+			rc[g.getPICKORDER()-1] = g.getNBROFCARDS(); 
+		}
+		return rc; 
+	}
+		
 	public Rule(eGame gme) {
 		this.Game = gme;
 		switch (gme) {

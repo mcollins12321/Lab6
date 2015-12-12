@@ -33,40 +33,26 @@ import logic.GameRuleBLL;
  * 
  * @author Marco Jakob
  */
-public class RootLayoutController implements Initializable {
-
-	// Reference to the main application
-	private MainApp mainApp;
-
+public class RootLayoutController implements Initializable 
+{
+	private MainApp mainApp; // Reference to the main application
 	@FXML
 	private MenuBar mb;
-
 	@FXML
 	private Menu mnuGame;
-
 	@FXML
 	private ToggleGroup tglGames;
-
-	@FXML
-	private RadioMenuItem Omaha = new RadioMenuItem();
-
-	@FXML
-	private RadioMenuItem Texas = new RadioMenuItem();
-
-	// Five Card Draw
-	@FXML
-	private RadioMenuItem FCD = new RadioMenuItem();
-
-	// Seven Card Draw
-	@FXML
-	private RadioMenuItem SCD = new RadioMenuItem();
-
-	@FXML
-	private RadioMenuItem oneJoker = new RadioMenuItem();
-
-	@FXML
-	private RadioMenuItem twoJoker = new RadioMenuItem();
-
+	
+	/**
+	 * Determines which rule is selected in the Games menu. 
+	 * 
+	 * Iterates through the menus in the menu bar looking for the Games menu. 
+	 * Once found it iterates through the menu items under Games looking for radio buttons. 
+	 * For every radio menu item it finds it checks if it's been selected. 
+	 * If a selected one is found strRuleName is set and the whole nest is broken out of
+	 * and strRuleName is returned. 
+	 * @return
+	 */
 	public String getRuleName()
 	{	
 		String strRuleName = null;
@@ -88,17 +74,17 @@ public class RootLayoutController implements Initializable {
 				}
 			}
 		}
-		
 		return strRuleName;
 	}
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		// GameChanger changer = new GameChanger(); 
 
 		Menu m = new Menu();
 		m.setText("Games");
 
-		//ToggleGroup tg = new ToggleGroup();
+		tglGames = new ToggleGroup();
 		
 		for (GameRuleDomainModel gr : GameRuleBLL.getRules()) {
 			
@@ -106,6 +92,7 @@ public class RootLayoutController implements Initializable {
 			String strRuleName = gr.getRULENAME();
 			mi.setToggleGroup(tglGames);
 			mi.setText(strRuleName);
+			// mi.setOnAction(changer); 
 			
 			if (gr.getDEFAULTGAME() == 1)
 			{
@@ -115,91 +102,27 @@ public class RootLayoutController implements Initializable {
 		}
 
 		mb.getMenus().add(0,m);
-
-		// mb.getMenus().add(m);
-		// mainApp.rootController.getc
-		// root.getChildren().add(menuBar);
-
-		/*
-		 * CheckMenuItem item1 = new CheckMenuItem("5 card stud");
-		 * item1.selectedProperty().addListener(new ChangeListener(){
-		 * 
-		 * @Override public void changed(ObservableValue arg0, Object arg1,
-		 * Object arg2) { mainApp.setiGameType(1); } });
-		 * 
-		 * 
-		 * mnuGame.getItems().add(item1);
-		 * 
-		 * 
-		 * 
-		 * CheckMenuItem item2 = new CheckMenuItem("5 card draw");
-		 * item2.selectedProperty().addListener(new ChangeListener(){
-		 * 
-		 * @Override public void changed(ObservableValue arg0, Object arg1,
-		 * Object arg2) { mainApp.setiGameType(2); } });
-		 * 
-		 * 
-		 * mnuGame.getItems().add(item2);
-		 */
-
 	}
+	
+//	class GameChanger implements EventHandler<ActionEvent> {
+//		@Override
+//		public void handle(ActionEvent e) {
+//			RadioMenuItem radio = (RadioMenuItem) e.getSource(); 
+//			changeGame(radio.getText());
+//		}
+//	}
+//	
+//	public void changeGame(String gameName) { 
+//		System.out.println(gameName);
+//	}
 
 	/**
 	 * Is called by the main application to give a reference back to itself.
 	 * 
 	 * @param mainApp
 	 */
-	public void setMainApp(MainApp mainApp) {
-		Omaha.setToggleGroup(tglGames);
-		Texas.setToggleGroup(tglGames);
-		FCD.setToggleGroup(tglGames);
-		Omaha.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent e) {
-				System.out.println("omaha toggled");
-				PokerTableController.setRle(new Rule(eGame.Omaha));
-			}
-		});
-		Texas.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent e) {
-				System.out.println("texas toggled");
-				PokerTableController.setRle(new Rule(eGame.TexasHoldEm));
-			}
-		});
-
-		FCD.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent e) {
-				System.out.println("fcd toggled");
-				PokerTableController.setRle(new Rule(eGame.FiveStud));
-			}
-		});
-
-		SCD.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent e) {
-				System.out.println("scd toggled");
-				PokerTableController.setRle(new Rule(eGame.SevenDraw));
-			}
-		});
-
-		oneJoker.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent e) {
-				System.out.println("one joker toggled");
-				PokerTableController.setRle(new Rule(eGame.FiveStudOneJoker));
-			}
-		});
-
-		twoJoker.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent e) {
-				System.out.println("two joker toggled");
-				PokerTableController.setRle(new Rule(eGame.FiveStudTwoJoker));
-			}
-		});
-
+	public void setMainApp(MainApp mainApp) 
+	{	
 		this.mainApp = mainApp;
 	}
 
@@ -225,17 +148,11 @@ public class RootLayoutController implements Initializable {
 		System.exit(0);
 	}
 
-
 	public ToggleGroup getTglGames() {
 		return tglGames;
 	}
-	
-	
 
 	public void setTglGames(ToggleGroup tglGames) {
 		this.tglGames = tglGames;
 	}
-
-	
-
 }

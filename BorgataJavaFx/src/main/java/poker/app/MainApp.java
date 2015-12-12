@@ -32,19 +32,17 @@ import poker.app.view.RootLayoutController;
 import pokerBase.Player;
 import pokerBase.Table;
 
-public class MainApp extends Application {
-
+public class MainApp extends Application 
+{
+	public RootLayoutController rootController = null;
 	private Stage primaryStage;
 	private BorderPane rootLayout;
-
-	public RootLayoutController rootController = null;
 	private Table tbl;
-	
 	private int iGameType;
 	
 	@Override
-	public void start(Stage primaryStage) {
-
+	public void start(Stage primaryStage) 
+	{
 		tbl = new Table();
 		
 		BorderPane root = new BorderPane();
@@ -52,17 +50,12 @@ public class MainApp extends Application {
 
 		this.primaryStage = primaryStage;
 		this.primaryStage.setTitle("Poker");
-
-		// Set the application icon.
 		this.primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/res/img/26.png")));
-
 		this.primaryStage.setScene(scene);
 		this.primaryStage.show();
 
 		initRootLayout();
-
 		showPokerTable();
-
 	}
 
 	public void initRootLayout() {
@@ -77,9 +70,8 @@ public class MainApp extends Application {
 			primaryStage.setScene(scene);
 
 			// Give the controller access to the main app.
-			//RootLayoutController controller = loader.getController();
+			// RootLayoutController controller = loader.getController();
 		    rootController = loader.getController();
-			
 			
 		    rootController.setMainApp(this);
 
@@ -136,27 +128,19 @@ public class MainApp extends Application {
 		}		
 		tbl.removePlayer(playerToRemove);		
 	}
-
-	public int getiGameType() {
+	
+	public int getiGameType() 
+	{
 		return iGameType;
 	}
-
-	public void setiGameType(int iGameType) {
+	
+	public void setiGameType(int iGameType) 
+	{
 		this.iGameType = iGameType;
 	}
-	
-/*	public ToggleGroup getToggleGroup()
-	{
-		ToggleGroup tgl = rootController.getTglGames();
-		return tgl;
-		
-
-	}*/
 	
 	public String getRuleName()
 	{
 		return rootController.getRuleName();
 	}
-	
-	
 }

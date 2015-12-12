@@ -9,7 +9,7 @@
    <top>
       <MenuBar fx:id="mb" prefHeight="35.0" prefWidth="150.0">
         <menus>
-          <Menu mnemonicParsing="false" text="Game">
+          <!-- <Menu mnemonicParsing="false" text="Game">
             <items>
                   <RadioMenuItem fx:id="oneJoker" mnemonicParsing="false" text="5 Card Joker Poker">
                      <toggleGroup>
@@ -22,7 +22,7 @@
                   <RadioMenuItem fx:id="Omaha" mnemonicParsing="false" text="Omaha" toggleGroup="$tglGames" />
                   <RadioMenuItem mnemonicParsing="false" text="Close" toggleGroup="$tglGames" />
             </items>
-          </Menu>
+          </Menu> -->
           <Menu mnemonicParsing="false" text="Help">
             <items>
               <MenuItem mnemonicParsing="false" text="About" />

@@ -20,8 +20,14 @@ public class GameRuleDAL {
 
 		try {
 			tx = session.beginTransaction();
-
+			/*
+			 * This returns all the entries in the GameRule DB. There's no order. 
+			 */
 			List rules = session.createQuery("FROM GameRuleDomainModel").list();
+			/*
+			 * Iterates through, casts each entry to the GameRuleDomainModel and then 
+			 * adds the instance to the arraylist to return. 
+			 */
 			for (Iterator iterator = rules.iterator(); iterator.hasNext();) {
 				GameRuleDomainModel rle = (GameRuleDomainModel) iterator.next();
 				Rules.add(rle);

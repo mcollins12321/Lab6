@@ -11,8 +11,6 @@ import java.util.UUID;
 
 import org.apache.commons.math3.util.Combinations;
 
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils.Collections;
-
 import domain.GameRuleDomainModel;
 import enums.eGame;
 import enums.eRank;
@@ -69,8 +67,8 @@ public class PokerTableController {
 	boolean bP3Sit = false;
 	boolean bP4Sit = false;
 
-	// Reference to the main application.
-	private MainApp mainApp;
+	
+	private MainApp mainApp; // Reference to the main application.
 	private GamePlay gme = null;
 	private Timer timer;
 	private int iCardDrawn = 0;
@@ -92,11 +90,11 @@ public class PokerTableController {
 	private ImageView imgTransCardP4 = new ImageView();
 	private ImageView imgTransCardCommon = new ImageView();
 	
-	private static Rule rle = new Rule(eGame.FiveStud);
-
-	public static void setRle(Rule rle) {
-		PokerTableController.rle = rle;
-	}
+	/* 
+	 * Sets the default game to the FiveStud. 
+	 * Then there's a setter method to change it. 
+	 */
+	private static Rule rle;
 
 	@FXML
 	public HBox HboxCommonArea;
@@ -242,6 +240,10 @@ public class PokerTableController {
 		return bSit;
 	}
 	
+	public static void setRle(Rule rle) {
+		PokerTableController.rle = rle;
+	}
+	
 	private void SetGameControls(eGameState eGameState) {
 		switch (eGameState) {
 		case StartOfGame:
@@ -269,14 +271,18 @@ public class PokerTableController {
 	@FXML
 	private void handlePlay() {
 
+		/* 
+		 * Goes through the mainApp to get the current selected rule from the rootlayoutcontroller. 
+		 * Creates a new hashmap with string keys and game rule dm values. 
+		 * Gets the hashset from the gamerulebll and adds to the new hashmap object
+		 * Pulls the rule set out of the hashmap using the rule name pulled from the rootcontroller. 
+		 * Then i created the new rule using that game rule domain model. 
+		 */
 		String strRuleName = mainApp.getRuleName();
 		HashMap<String, GameRuleDomainModel> hs = new HashMap();
 		hs = GameRuleBLL.getRuleHashSet();		
 		GameRuleDomainModel gr = hs.get(strRuleName);
-		
-		
-		
-		//tglGame = mainApp.getToggleGroup();
+		rle = new Rule(gr); 
 		
 		eGameState = eGameState.StartOfGame;
 		
@@ -298,7 +304,8 @@ public class PokerTableController {
 		winner2.setVisible(false);
 		winner3.setVisible(false);
 		winner4.setVisible(false);
-
+		
+		// TODO change this to use the rule from the database. 
 		// Get the Rule, start the Game
 		gme = new GamePlay(rle);
 
